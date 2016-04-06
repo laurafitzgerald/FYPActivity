@@ -52,7 +52,7 @@ nc.subscribe('activity.delete', function(msg,reply,sub){
 
 	var query = {};
 	var msg = msg.replace(/"/g, '');
-	
+
 
 	query.filters = ["id='" + msg +"'"];
 
@@ -61,5 +61,26 @@ nc.subscribe('activity.delete', function(msg,reply,sub){
 		console.log("delete response" + response);
 		nc.publish(reply, response);
 	});
+
+});
+
+//{"data": {}, filters: []}
+nc.subscribe('activity.update', function(msg, reply, sub){
+
+	var query = {};
+	var obj = JSON.parse(msg);
+	console.log(obj);
+	var id = obj.id;
+	query.data = obj;
+	var filters = ["id='" + id +"'"];
+	query.filters = filters;
+
+	nc.request('data.update.activity', JSON.stringify(query), function(response){
+
+		console.log(response);
+		nc.publish(reply, response);
+
+	})
+
 
 });
