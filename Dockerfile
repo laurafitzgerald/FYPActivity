@@ -4,7 +4,8 @@ FROM node
 
 
 ADD service /service
+ADD package.json /package.json
 
-RUN cd /service; npm install
+RUN npm install
 
 CMD ["node", "/service/service.js"]

@@ -4,7 +4,7 @@ var nc = nats.connect({'servers': servers});
 console.log("Connected to " + nc.currentServer);
 
 
-var activitytable = '{ "columns": { "id": "text", "name": "text","timestamp": "text", "type": "text" ,"location": "text" ," time": "decimal", "distance": "decimal", "speed": "decimal", "username": "text"  },"primary": ["id"], "indexes": ["username"]}';
+var activitytable = '{ "columns": { "id": "text", "name": "text","timestamp": "timestamp", "type": "text" ,"location": "text" ," time": "decimal", "distance": "decimal", "speed": "decimal", "username": "text"  },"primary": ["id"], "indexes": ["username"]}';
 nc.request('data.register.activity', activitytable, function(response){});
 
 
@@ -26,7 +26,7 @@ nc.subscribe('activity.create', function(msg, reply, sub){
 	//console.log("Message.username: " + msg);	
 	var obj = JSON.parse(msg);
 	var d = new Date();
-	var currentdate = d.toLocaleString();
+	var currentdate = d.toISOString();
 	console.log("Current Date: "+ currentdate);
 	obj.timestamp = currentdate;
 	obj.id = (new Date).getTime().toString();
