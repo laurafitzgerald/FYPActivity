@@ -1,18 +1,17 @@
 PASS=$(shell echo $$LAURADOCKERPASSWORD)
 
 clean: 
-	docker rmi fyp/activitytest; docker rmi fyp/activity
+	docker rmi laurafitz/activitytest; docker rmi laurafitz/activity
 
 build-test:
-	docker build -f Dockerfile-test -t fyp/activitytest .
+	docker build -f Dockerfile-test -t laurafitz/activitytest .
 
 test: build-test
-	docker run --rm -v $(shell pwd)/src:/activity fyp/activitytest
+	docker run --rm -v $(shell pwd)/src:/activity laurafitz/activitytest
 
 build:
-	docker build -t fyp/activity .
+	docker build -t laurafitz/activity .
 
 release: build
-	docker login -e laurafitzgeraldsemail@gmail.com -u laura -p $(PASS)  
-	docker-laura.ammeon.com:80 && docker tag -f fyp/activity 
-	docker-laura.ammeon.com:80/fyp/activity && docker push docker-laura.ammeon.com:80/fyp/activity
+	docker push laurafitz/activity
+	

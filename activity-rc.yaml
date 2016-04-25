@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: activity
+  name: activity
+spec:
+  replicas: 1
+  selector:
+    name: activity
+  template:
+    metadata:
+      labels:
+        name: activity
+      name: activity
+    spec:
+      containers:
+        - image: laurafitz/activity:latest
+          name: activity
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+
